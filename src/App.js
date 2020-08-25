@@ -1,8 +1,8 @@
 import React from 'react';
-import Grid from './Grid';
+import Game from './Game';
 
 const App = () => {
-  return <Grid />;
+  return <Game />;
 };
 
 export default App;

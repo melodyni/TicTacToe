@@ -2,18 +2,12 @@ import React from 'react';
 import Cell from './Cell';
 import './game.css';
 
-const Grid = () => {
+const Grid = (props) => {
   return (
     <div className='grid'>
-      <Cell></Cell>
-      <Cell></Cell>
-      <Cell></Cell>
-      <Cell></Cell>
-      <Cell></Cell>
-      <Cell></Cell>
-      <Cell></Cell>
-      <Cell></Cell>
-      <Cell></Cell>
+      {props.cellIds.map((id) => (
+        <Cell key={id}></Cell>
+      ))}
     </div>
   );
 };
