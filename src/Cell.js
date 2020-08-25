@@ -1,8 +1,8 @@
 import React from 'react';
 import './game.css';
 
-const Cell = () => {
-  return <button className='cell'></button>;
+const Cell = (props) => {
+  return <button className='cell'>{props.name}</button>;
 };
 
 export default Cell;

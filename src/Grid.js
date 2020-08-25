@@ -3,10 +3,11 @@ import Cell from './Cell';
 import './game.css';
 
 const Grid = (props) => {
+  console.log(props);
   return (
     <div className='grid'>
-      {props.cellIds.map((id) => (
-        <Cell key={id}></Cell>
+      {props.cellIds.map((name, id) => (
+        <Cell name={name} key={id} />
       ))}
     </div>
   );

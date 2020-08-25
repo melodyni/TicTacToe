@@ -4,10 +4,10 @@ import Grid from './Grid';
 class Game extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = { cells: Array(9).fill('X') };
   }
   render() {
-    return <Grid cellIds={[0, 1, 2, 3, 4, 5, 6, 7, 8]} />;
+    return <Grid cellIds={this.state.cells} />;
   }
 }
 
