@@ -4,17 +4,20 @@ import Grid from './Grid';
 class Game extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { player: 'X', cells: Array(9).fill('') };
+    this.state = { player: 'X', cells: Array(9).fill(null) };
     this.handleClick = this.handleClick.bind(this);
   }
 
   handleClick(event) {
-    let newCells = this.state.cells.slice();
-    newCells[event.target.id] = this.state.player;
-    this.setState({
-      player: this.state.player === 'X' ? '0' : 'X',
-      cells: newCells,
-    });
+    const cellId = event.target.id;
+    if (this.state.cells[cellId] === null) {
+      let newCells = this.state.cells.slice();
+      newCells[cellId] = this.state.player;
+      this.setState({
+        player: this.state.player === 'X' ? '0' : 'X',
+        cells: newCells,
+      });
+    }
   }
 
   render() {
