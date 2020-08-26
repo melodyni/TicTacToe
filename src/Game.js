@@ -6,10 +6,10 @@ class Game extends React.Component {
   constructor(props) {
     super(props);
     this.state = { player: 'X', cells: Array(9).fill(null), winner: null };
-    this.handleClick = this.handleClick.bind(this);
+    this.updateGame = this.updateGame.bind(this);
   }
 
-  handleClick(event) {
+  updateGame(event) {
     const id = event.target.id;
     const { cells, winner, player } = this.state;
 
@@ -31,14 +31,12 @@ class Game extends React.Component {
 
   render() {
     const { winner, player, cells } = this.state;
-    let status = <Status status={'Turn: '} text={`Player ${player}`} />;
-    if (winner) {
-      status = <Status status={'Winner: '} text={winner} />;
-    }
+    const winMsg = <Status message={`Winner: ${winner}`} />;
+    const turnMsg = <Status message={`Turn: Player ${player}`} />;
     return (
       <div>
-        {status}
-        <Grid cellIds={cells} onClick={this.handleClick} />
+        {winner ? winMsg : turnMsg}
+        <Grid cellIds={cells} onClick={this.updateGame} />
       </div>
     );
   }
