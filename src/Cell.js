@@ -3,7 +3,7 @@ import './game.css';
 
 const Cell = (props) => {
   return (
-    <button className='cell' id={props.id} onClick={props.onClick}>
+    <button className='cell font' id={props.id} onClick={props.onClick}>
       {props.name}
     </button>
   );

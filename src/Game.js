@@ -31,7 +31,7 @@ class Game extends React.Component {
 
   render() {
     const { winner, player, cells } = this.state;
-    let status = <Status status={'Next Turn: '} text={`Player ${player}`} />;
+    let status = <Status status={'Turn: '} text={`Player ${player}`} />;
     if (winner) {
       status = <Status status={'Winner: '} text={winner} />;
     }
