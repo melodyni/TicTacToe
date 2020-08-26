@@ -5,8 +5,8 @@ import './game.css';
 const Grid = (props) => {
   return (
     <div className='grid'>
-      {props.cellIds.map((name, id) => (
-        <Cell name={name} id={id} key={id} onClick={props.onClick} />
+      {props.cells.map((symbol, id) => (
+        <Cell symbol={symbol} id={id} key={id} onClick={props.onClick} />
       ))}
     </div>
   );

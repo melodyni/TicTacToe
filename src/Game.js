@@ -36,7 +36,7 @@ class Game extends React.Component {
     return (
       <div>
         {winner ? winMsg : turnMsg}
-        <Grid cellIds={cells} onClick={this.updateGame} />
+        <Grid cells={cells} onClick={this.updateGame} />
       </div>
     );
   }
