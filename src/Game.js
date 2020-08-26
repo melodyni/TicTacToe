@@ -1,5 +1,6 @@
 import React from 'react';
 import Grid from './Grid';
+import Status from './Status';
 
 class Game extends React.Component {
   constructor(props) {
@@ -29,10 +30,15 @@ class Game extends React.Component {
   }
 
   render() {
+    const { winner, player, cells } = this.state;
+    let status = <Status status={'Next Turn: '} text={`Player ${player}`} />;
+    if (winner) {
+      status = <Status status={'Winner: '} text={winner} />;
+    }
     return (
       <div>
-        <p className='status'>Winner: {this.state.winner}</p>
-        <Grid cellIds={this.state.cells} onClick={this.handleClick} />
+        {status}
+        <Grid cellIds={cells} onClick={this.handleClick} />
       </div>
     );
   }
