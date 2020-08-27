@@ -40,12 +40,13 @@ class Game extends React.Component {
         let newCells = cells.slice();
         if (!newCells[id] && !isGameDraw && !winner.name) {
           newCells[id] = currentPlayer.symbol;
+          const newWinner = this.getWinner(newCells, currentPlayer);
           return {
             cells: newCells,
             currentPlayer: nextPlayer,
             nextPlayer: currentPlayer,
-            winner: this.getWinner(newCells, currentPlayer),
-            isGameDraw: newCells.every((c) => c) && !winner.name,
+            winner: newWinner,
+            isGameDraw: newCells.every((c) => c) && !newWinner.name,
           };
         }
       }
@@ -56,7 +57,7 @@ class Game extends React.Component {
     const { cells, currentPlayer, isGameDraw, winner } = this.state;
     let status = `${currentPlayer.name}'s Turn`;
     if (winner.name) {
-      status = `${currentPlayer.name} Won`;
+      status = `${winner.name} Won`;
     }
     if (isGameDraw) {
       status = `Draw Game`;
