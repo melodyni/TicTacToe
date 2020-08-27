@@ -18,47 +18,52 @@ class Game extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentPlayer: { name: 'Ragini', symbol: 'X' },
-      nextPlayer: { name: 'Melodyni', symbol: '0' },
+      currentPlayer: { name: 'X', symbol: 'X' },
+      nextPlayer: { name: '0', symbol: '0' },
       cells: Array(9).fill(''),
-      status: 'turn',
+      winner: { name: null },
+      isGameDraw: false,
     };
     this.updateGame = this.updateGame.bind(this);
   }
 
-  getGameStatus(cells) {
+  getWinner(cells, currentPlayer) {
     const isGameWon = winConditions.some((subCell) =>
-      subCell.every((id) => cells[id] === this.state.currentPlayer.symbol)
+      subCell.every((id) => cells[id] === currentPlayer.symbol)
     );
-    const allMovePlayed = cells.every((c) => c);
-    return isGameWon ? 'won' : allMovePlayed ? 'draw' : 'turn';
+    return { name: isGameWon ? currentPlayer.name : null };
   }
 
   updateGame(id) {
-    this.setState(({ currentPlayer, nextPlayer, cells, status }) => {
-      let newCells = cells.slice();
-      if (!newCells[id] && status === 'turn') {
-        newCells[id] = currentPlayer.symbol;
-        return {
-          cells: newCells,
-          currentPlayer: nextPlayer,
-          nextPlayer: currentPlayer,
-          status: this.getGameStatus(newCells),
-        };
+    this.setState(
+      ({ currentPlayer, nextPlayer, cells, isGameDraw, winner }) => {
+        let newCells = cells.slice();
+        if (!newCells[id] && !isGameDraw && !winner.name) {
+          newCells[id] = currentPlayer.symbol;
+          return {
+            cells: newCells,
+            currentPlayer: nextPlayer,
+            nextPlayer: currentPlayer,
+            winner: this.getWinner(newCells, currentPlayer),
+            isGameDraw: newCells.every((c) => c) && !winner.name,
+          };
+        }
       }
-    });
+    );
   }
 
   render() {
-    const { status, currentPlayer, nextPlayer, cells } = this.state;
-    const statusMsg = {
-      won: `Winner: ${nextPlayer.name}`,
-      turn: `Turn: Player ${currentPlayer.name}`,
-      draw: `Draw Game`,
-    };
+    const { cells, currentPlayer, isGameDraw, winner } = this.state;
+    let status = `${currentPlayer.name}'s Turn`;
+    if (winner.name) {
+      status = `${currentPlayer.name} Won`;
+    }
+    if (isGameDraw) {
+      status = `Draw Game`;
+    }
     return (
       <div>
-        <Status msg={statusMsg[status]} />
+        <Status msg={status} />
         <Grid cells={cells} onClick={this.updateGame} />
       </div>
     );
