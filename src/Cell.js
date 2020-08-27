@@ -3,13 +3,13 @@ import './game.css';
 
 const Cell = (props) => {
   const { symbol, id, onClick } = props;
-  let color = '';
-  if (symbol === 'X') {
-    color = 'red';
-  } else if (symbol === '0') {
-    color = 'blue';
-  }
-  const styles = `cell font ${color}`;
+  const color = {
+    X: 'red',
+    '0': 'blue',
+    '': '',
+  };
+
+  const styles = `cell font ${color[symbol]}`;
   return (
     <button className={styles} id={id} onClick={onClick}>
       {symbol}

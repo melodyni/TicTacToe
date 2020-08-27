@@ -17,13 +17,18 @@ const winConditions = [
 class Game extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { player: 'X', cells: Array(9).fill(null), status: 'turn' };
+    this.state = {
+      currentPlayer: { name: 'Ragini', symbol: 'X' },
+      nextPlayer: { name: 'Melodyni', symbol: '0' },
+      cells: Array(9).fill(''),
+      status: 'turn',
+    };
     this.updateGame = this.updateGame.bind(this);
   }
 
   getGameStatus(cells) {
     const isGameWon = winConditions.some((subCell) =>
-      subCell.every((id) => cells[id] === this.state.player)
+      subCell.every((id) => cells[id] === this.state.currentPlayer.symbol)
     );
     const allMovePlayed = cells.every((c) => c);
     return isGameWon ? 'won' : allMovePlayed ? 'draw' : 'turn';
@@ -31,23 +36,25 @@ class Game extends React.Component {
 
   updateGame(event) {
     const id = event.target.id;
-    const { cells, status, player } = this.state;
-    if (!cells[id] && status === 'turn') {
+    this.setState(({ currentPlayer, nextPlayer, cells, status }) => {
       let newCells = cells.slice();
-      newCells[id] = player;
-      this.setState({
-        status: this.getGameStatus(newCells),
-        player: player === 'X' ? '0' : 'X',
-        cells: newCells,
-      });
-    }
+      if (!newCells[id] && status === 'turn') {
+        newCells[id] = currentPlayer.symbol;
+        return {
+          cells: newCells,
+          currentPlayer: nextPlayer,
+          nextPlayer: currentPlayer,
+          status: this.getGameStatus(newCells),
+        };
+      }
+    });
   }
 
   render() {
-    const { status, player, cells } = this.state;
+    const { status, currentPlayer, nextPlayer, cells } = this.state;
     const statusMsg = {
-      won: `Winner: ${player === 'X' ? '0' : 'X'}`,
-      turn: `Turn: Player ${player}`,
+      won: `Winner: ${nextPlayer.name}`,
+      turn: `Turn: Player ${currentPlayer.name}`,
       draw: `Draw Game`,
     };
     return (
