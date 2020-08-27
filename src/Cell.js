@@ -11,7 +11,7 @@ const Cell = (props) => {
 
   const styles = `cell font ${color[symbol]}`;
   return (
-    <button className={styles} id={id} onClick={onClick}>
+    <button className={styles} id={id} onClick={() => onClick(id)}>
       {symbol}
     </button>
   );

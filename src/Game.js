@@ -34,8 +34,7 @@ class Game extends React.Component {
     return isGameWon ? 'won' : allMovePlayed ? 'draw' : 'turn';
   }
 
-  updateGame(event) {
-    const id = event.target.id;
+  updateGame(id) {
     this.setState(({ currentPlayer, nextPlayer, cells, status }) => {
       let newCells = cells.slice();
       if (!newCells[id] && status === 'turn') {
